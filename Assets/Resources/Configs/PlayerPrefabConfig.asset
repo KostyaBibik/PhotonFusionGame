@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb056165e6004b059c93eac9e5ca421f, type: 3}
+  m_Name: PlayerPrefabConfig
+  m_EditorClassIdentifier: 
+  _view: {fileID: 6080204378783137071, guid: 24465c02057414247954dbbb91b852b2, type: 3}
+  _moveSpeed: 5
+  _attackRange: 2
+  _damagePerSecond: 2
