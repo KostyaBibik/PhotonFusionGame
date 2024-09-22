@@ -1,4 +1,5 @@
 ﻿using Game.UI.PlayerStats;
+using Game.UI.UpgradeButton;
 using Zenject;
 
 namespace Game.UI
@@ -8,11 +9,17 @@ namespace Game.UI
         public override void InstallBindings()
         {
             BindPlayerStats();
+            BindUpgradeButton();
         }
 
         private void BindPlayerStats()
         {
             Container.BindPresenterWithView<PlayerStatsPresenter, PlayerStatsView>();
+        }
+
+        private void BindUpgradeButton()
+        {
+            Container.BindPresenterWithView<UpgradeButtonPresenter, UpgradeButtonView>();
         }
     }
 }

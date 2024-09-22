@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game.UI.PlayerStats
 {
-    public class PlayerStatsPresenter : UIPresenter<PlayerStatsView>, ITickable
+    public class PlayerStatsPresenter : UIPresenter<PlayerStatsView>
     {
         [Inject] private InputHandler _inputHandler;
         private AxisInputContext _movementContext;
@@ -17,14 +17,6 @@ namespace Game.UI.PlayerStats
             _movementContext = _inputHandler.GetContext<MovementContext>();
         }
 
-
-        /// <summary>
-        /// TEST -> CLEAR
-        /// </summary>
-        public void Tick()
-        {
-           UnityEngine.Debug.Log($"_movementContext.Value: {_movementContext.Value}");
-        }
 
         public override void Dispose()
         {
