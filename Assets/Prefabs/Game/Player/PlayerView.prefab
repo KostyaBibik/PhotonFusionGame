@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 6080204378783137070}
   - component: {fileID: 6080204378783137071}
   - component: {fileID: 1942645445028599653}
+  - component: {fileID: -145855495156135042}
+  - component: {fileID: -6462005672921137577}
+  - component: {fileID: -8637720908261616266}
   m_Layer: 0
   m_Name: PlayerView
   m_TagString: Untagged
@@ -46,7 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a92e69740ac4385b2a6c7a10a2e10b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
   _rigidbody: {fileID: 1942645445028599653}
+  _movementComponent: {fileID: -6462005672921137577}
 --- !u!54 &1942645445028599653
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -63,6 +70,77 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-145855495156135042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080204378783137068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 24465c02057414247954dbbb91b852b2
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 6080204378783137071}
+  - {fileID: -6462005672921137577}
+  - {fileID: -8637720908261616266}
+  SimulationBehaviours: []
+--- !u!114 &-6462005672921137577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080204378783137068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64224a5ca4b840e085b35b52d0e8c53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+--- !u!114 &-8637720908261616266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080204378783137068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1710889294, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 6080204379964750196}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
 --- !u!1 &6080204379964750197
 GameObject:
   m_ObjectHideFlags: 0

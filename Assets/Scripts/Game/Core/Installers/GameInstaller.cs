@@ -1,5 +1,5 @@
 ﻿using Game.Core.Factories.Impl;
-using Game.Core.Initialization;
+using Game.Core.Systems;
 using Zenject;
 
 namespace Game.Core.Installers
@@ -9,8 +9,8 @@ namespace Game.Core.Installers
         public override void InstallBindings()
         {
             BindFactories();
-            
-            BindGameInitializer();
+
+            BindTrackSystems();
         }
         
         private void BindFactories()
@@ -20,9 +20,9 @@ namespace Game.Core.Installers
                 .NonLazy();
         }
 
-        private void BindGameInitializer()
+        private void BindTrackSystems()
         {
-            Container.BindInterfacesAndSelfTo<GameInitializer>()
+            Container.BindInterfacesAndSelfTo<PlayerTrackerSystem>()
                 .AsSingle();
         }
     }

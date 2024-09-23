@@ -7,16 +7,21 @@ namespace Game.Core.Entities.PlayerImpl
         public readonly ReactiveProperty<float> SpeedMoving = new();
         public readonly ReactiveProperty<float> AttackRange = new();
         public readonly ReactiveProperty<float> DamagePerSecond = new();
+        private readonly int _playerId;
 
+        public int PlayerId => _playerId;
+        
         public PlayerModel(
             float speedMoving,
             float attackRange,
-            float damagePerSecond
+            float damagePerSecond,
+            int playerId
         )
         {
             SpeedMoving.Value = speedMoving;
             AttackRange.Value = attackRange;
             DamagePerSecond.Value = damagePerSecond;
+            _playerId = playerId;
         }
         
         public void UpdateSpeedMoving(float value)

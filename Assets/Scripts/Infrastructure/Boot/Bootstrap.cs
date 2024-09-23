@@ -1,4 +1,6 @@
-﻿using Infrastructure.Scenes;
+﻿using Fusion;
+using Game.Core.Initialization;
+using Infrastructure.Scenes;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +10,8 @@ namespace Infrastructure.Boot
     {
         [Inject] private readonly BootstrapView _view;
         [Inject] private readonly SceneLoader _loader;
+        [Inject] private readonly NetworkInitializer _networkInitializer;
+        [Inject] private readonly NetworkSceneManagerDefault _networkSceneManager;
 
         public async void Initialize()
         {
@@ -15,9 +19,12 @@ namespace Infrastructure.Boot
                 _view.SetProgress(progress);
             
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            
             ApplyProgress(0);
 
-            await _loader.LoadGame(ApplyProgress);
+            await _networkInitializer.ConnectOrCreateRoom();
+            
+           // await _loader.LoadGame(ApplyProgress);
 
             ApplyProgress(1);
         }
