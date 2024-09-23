@@ -35,9 +35,6 @@ namespace Game.Core.Factories.Impl
 
             var movementComponent = view.MovementComponent;
             
-            //movementComponent.SetupOnClients(_inputHandler, _networkRunner);
-           // var movementComponent = Container.InstantiateComponent<MovementComponent>(view.gameObject);
-           
             model.SpeedMoving
                 .AsObservable()
                 .Subscribe(movementComponent.UpdateSpeedMoving)

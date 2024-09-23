@@ -15,55 +15,59 @@ namespace Game.Core.Components
         private AxisInputContext _movementContext;
         private Rigidbody _rigidbody;
         private NetworkRigidbody _networkRigidbody;
+        private Vector3 _directionInput;
         
         [Networked] private float _speedMoving { get; set; }
+        [Networked] private Vector3 _directionMove { get; set; }
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
         private void Start()
         {
-            _networkRigidbody = GetComponent<NetworkRigidbody>();
-            if (Object.HasInputAuthority)
-            {
-                _networkRigidbody.Rigidbody.isKinematic = false;
-            }
-            else
-            {
-                _networkRigidbody.Rigidbody.isKinematic = true;
-            }
-            
             if (!Object.HasInputAuthority)
             {
                 return;
             }
-
-            Debug.Log("Start  Object.HasInputAuthority");
             
             _inputHandler = DiContainerRef.Container.Resolve<InputHandler>();
             _networkRunner = DiContainerRef.Container.Resolve<NetworkRunner>();
-            _rigidbody = GetComponent<Rigidbody>();
 
             _movementContext = _inputHandler.GetContext<MovementContext>();
-
-           
         }
         
         public override void FixedUpdateNetwork()
         {
-            if (!Object.HasInputAuthority || _movementContext == null)
+            if (GetInput(out NetworkInputData data))
+            {
+                Debug.Log($"(GetInput( {data.movementInput}");
+
+                _directionInput = data.movementInput;
+            }
+            else
+            {
+                _directionInput = Vector3.zero;
+            }
+
+            _rigidbody.velocity = _directionInput * _speedMoving;
+
+            /*if (!Object.HasInputAuthority || _movementContext == null)
             {
                 return;
             }
-            Debug.Log("Object.HasInputAuthority" + transform.name + Object.Id);
 
             var input = _movementContext.Value;
-            Debug.Log($"{input.x} : {input.y} \\ {_speedMoving}");
 
-            var movement = new Vector3(input.x, 0, input.y) * (_speedMoving * Time.fixedDeltaTime);
+            var movement = new Vector3(input.x, 0, input.y) * (_speedMoving * Time.fixedDeltaTime);*/
 
-            transform.Translate(movement);
-            //_rigidbody.MovePosition(transform.position + movement);
         }
-
+        
+        
         public void UpdateSpeedMoving(float value)
             => _speedMoving = value;
     }
+    
+    
 }

@@ -6,14 +6,15 @@
     {
         private TView _view;
         
-        protected TModel Model;
+        private TModel _model;
         
         public TView View => _view;
+        public TModel Model => _model;
 
         public IEntityPresenter(TView view, TModel model)
         {
             _view = view;
-            Model = model;
+            _model = model;
         }
     }
 }

@@ -34,6 +34,11 @@ namespace Game.Core.Systems
             }*/
         }
 
+        public void OnInput(NetworkRunner runner, NetworkInput input)
+        {
+            //Debug.Log("OnInput");
+        }
+
 #region Unused Callbacks from Network
 
         public void OnConnectedToServer(NetworkRunner runner) {}
@@ -42,7 +47,6 @@ namespace Game.Core.Systems
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) {}
         public void OnDisconnectedFromServer(NetworkRunner runner) {}
         public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) {}
-        public void OnInput(NetworkRunner runner, NetworkInput input) {}
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) {}
         public void OnPlayerActivation(NetworkRunner runner, PlayerRef player) {}
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) {}
