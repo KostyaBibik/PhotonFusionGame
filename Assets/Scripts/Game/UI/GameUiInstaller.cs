@@ -14,7 +14,7 @@ namespace Game.UI
 
         private void BindPlayerStats()
         {
-            Container.BindPresenterWithView<PlayerStatsPresenter, PlayerStatsView>();
+            Container.BindPresenterWithView<UIPlayerStatsPresenter, PlayerStatsView>();
         }
 
         private void BindUpgradeButton()

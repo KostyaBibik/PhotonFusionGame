@@ -3,6 +3,7 @@ using DataBase.Configs;
 using Fusion;
 using Game.Core.Components;
 using Game.Core.Entities.PlayerImpl;
+using Game.Core.Services;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,7 @@ namespace Game.Core.Factories.Impl
         [Inject] private readonly NetworkRunner _networkRunner;
         [Inject] private readonly DiContainer _container;
         [Inject] private readonly InputHandler _inputHandler;
+        [Inject] private readonly PlayersService _playersService;
         
         public PlayerFactory(DiContainer container) : base(container)
         {
@@ -29,7 +31,7 @@ namespace Game.Core.Factories.Impl
             var attackRange = _playerPrefabConfig.AttackRange;
             var damagePerSecond = _playerPrefabConfig.DamagePerSecond;
 
-            var model = new PlayerModel(speed, attackRange, damagePerSecond, player.PlayerId);
+            var model = new PlayerModel(speed, attackRange, damagePerSecond, player);
 
             var view = _networkRunner.Spawn<PlayerView>(_playerPrefabConfig.View, inputAuthority:player);
 
@@ -41,6 +43,7 @@ namespace Game.Core.Factories.Impl
                 .AddTo(view);
             
             var presenter = new PlayerPresenter(view, model);
+            _playersService.AddPlayer(presenter);
             
             return presenter;
         }

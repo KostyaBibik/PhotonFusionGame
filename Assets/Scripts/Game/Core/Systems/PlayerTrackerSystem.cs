@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using Game.Core.Factories.Impl;
+using Game.Core.Services;
 using UnityEngine;
 using Zenject;
 
@@ -10,12 +11,16 @@ namespace Game.Core.Systems
 {
     public class PlayerTrackerSystem : INetworkRunnerCallbacks, IInitializable
     {
-        [Inject] private PlayerFactory _playerFactory;
+        [Inject] private readonly PlayerFactory _playerFactory;
         [Inject] private readonly NetworkRunner _networkRunner;
+        [Inject] private readonly PlayersService _playersService;
 
         public void Initialize()
         {
-            _networkRunner.AddCallbacks(this);
+            if (_networkRunner.IsServer)
+            {
+                _networkRunner.AddCallbacks(this);
+            }
         }
         
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -30,14 +35,16 @@ namespace Game.Core.Systems
         {
             /*if (_networkRunner.IsServer)
             {
-                _playerFactory.Create(new Vector3(0, 0, 0));
+                var leftPlayer = _playersService.GetPlayerPresenter(player);
+                var playerObject = runner.GetPlayerObject(player);
+                
+                if (leftPlayer != null)
+                {
+                    _networkRunner.Despawn(leftPlayer.View.Object);
+                }
             }*/
         }
-
-        public void OnInput(NetworkRunner runner, NetworkInput input)
-        {
-            //Debug.Log("OnInput");
-        }
+        
 
 #region Unused Callbacks from Network
 
@@ -52,6 +59,7 @@ namespace Game.Core.Systems
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) {}
         public void OnSceneLoadDone(NetworkRunner runner) {}
         public void OnSceneLoadStart(NetworkRunner runner) {}
+        public void OnInput(NetworkRunner runner, NetworkInput input) { }
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) {}
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) {}
         public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) {}

@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Fusion;
+using UniRx;
 
 namespace Game.Core.Entities.PlayerImpl
 {
@@ -8,21 +9,21 @@ namespace Game.Core.Entities.PlayerImpl
         public readonly ReactiveProperty<float> AttackRange = new();
         public readonly ReactiveProperty<float> DamagePerSecond = new();
         
-        private readonly int _playerId;
+        private readonly PlayerRef _player;
         
-        public int PlayerId => _playerId;
+        public PlayerRef Player => _player;
         
         public PlayerModel(
             float speedMoving,
             float attackRange,
             float damagePerSecond,
-            int playerId
+            PlayerRef player
         )
         {
             SpeedMoving.Value = speedMoving;
             AttackRange.Value = attackRange;
             DamagePerSecond.Value = damagePerSecond;
-            _playerId = playerId;
+            _player = player;
         }
         
         public void UpdateSpeedMoving(float value)

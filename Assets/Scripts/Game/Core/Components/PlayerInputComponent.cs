@@ -12,7 +12,7 @@ namespace Game.Core.Components
         public Vector3 movementInput;
     }
     
-    public class PlayerInputComponent : NetworkBehaviour, INetworkRunnerCallbacks
+    public class PlayerInputComponent : NetworkBehaviour, INetworkRunnerCallbacks, IPlayerLeft
     {
         private InputHandler _inputHandler; 
         private AxisInputContext _movementContext;
@@ -20,58 +20,107 @@ namespace Game.Core.Components
         private MovementComponent _movementComponent;
         private NetworkRunner _networkRunner;
 
+        private bool _aliveStatus;
+        
         private void Awake()
         {
             _networkRunner = DiContainerRef.Container.Resolve<NetworkRunner>();
+            _inputHandler = DiContainerRef.Container.Resolve<InputHandler>();
+            
+            _movementContext = _inputHandler.GetContext<MovementContext>();
         }
 
         private void Start()
         {
-            _inputHandler = DiContainerRef.Container.Resolve<InputHandler>();
             _networkRunner.AddCallbacks(this);
-
-           // _movementContext = _inputHandler.GetContext<MovementContext>();
         }
 
         public override void FixedUpdateNetwork()
         {
-            _movementInput = new Vector3(UnityEngine.Input.GetAxis("Horizontal"), 0f, UnityEngine.Input.GetAxis("Vertical"));
-        }
+            if(_aliveStatus) 
+                return;
+            
+            if(Object == null)
+                return;
+            
+            if(!Object.InputAuthority)
+                return;
+            
+            _movementInput = new Vector3(_movementContext.Value.x, 0f, _movementContext.Value.y);
+            Debug.Log("FixedUpdateNetwork " + _movementInput);
 
-        public NetworkInputData GetNetworkData()
-        {
-            var data = new NetworkInputData();
-            data.movementInput = _movementInput;
-
-            return data;
         }
         
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            _movementComponent = GetComponent<MovementComponent>();
+            if(_aliveStatus) 
+                return;
+            
+            if(Object == null)
+                return;
+            
+            if(!Object.InputAuthority)
+                return;
             
             NetworkInputData inputData = new NetworkInputData
             {
                 movementInput = _movementInput
             };
-
+            
+            Debug.Log("OnInput " + inputData.movementInput);
+            
             input.Set(inputData);
         }
 
+        public void PlayerLeft(PlayerRef player)
+        {
+            if(!Object.InputAuthority)
+                return;
+            
+            Debug.Log($"Player {player} left the game.");
+
+            var playerObject = _networkRunner.GetPlayerObject(player);
+            
+            if (playerObject == Object)
+            {
+                Debug.Log("This is the current player, disabling input and despawning.");
+                _aliveStatus = true;
+                _networkRunner.Despawn(Object);
+            }
+            else
+            {
+                Debug.Log("This is not the current player, no action needed.");
+            }
+        }
+
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
+
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
+
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+
         public void OnConnectedToServer(NetworkRunner runner) { }
+
         public void OnDisconnectedFromServer(NetworkRunner runner) { }
+
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
+
         public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
+
         public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
+
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
+
         public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
+
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
+
         public void OnSceneLoadStart(NetworkRunner runner) { }
+
         public void OnSceneLoadDone(NetworkRunner runner) { }
     }
 }
