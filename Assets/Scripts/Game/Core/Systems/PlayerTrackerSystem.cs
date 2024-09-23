@@ -27,7 +27,7 @@ namespace Game.Core.Systems
         {
             if (_networkRunner.IsServer)
             {
-                _playerFactory.Create(new Vector3(0, 0, 0), player);
+                _playerFactory.Create(player);
             }
         }
 

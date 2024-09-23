@@ -1,4 +1,7 @@
-﻿using Fusion;
+﻿using System;
+using System.Threading.Tasks;
+using Fusion;
+using Game.Core.Entities.PlayerImpl;
 using Game.Core.Services;
 using Infrastructure.UI;
 using UniRx;
@@ -19,25 +22,43 @@ namespace Game.UI.PlayerStats
         public override async void Initialize()
         {
             Debug.Log("Initialize");
+
+            await Task.Delay(2000);
             
-            var localPlayer = await _playersService.GetLocalPlayer();
+            var playerObject = _networkRunner.GetPlayerObject(_networkRunner.LocalPlayer);
+
+// Получаем компонент PlayerModel из объекта игрока
+            var model = playerObject.GetComponent<PlayerView>().PlayerModel;
+
+// Теперь вы можете использовать model для доступа к данным игрока
+            if (model != null)
+            {
+                // Пример использования
+                Debug.Log($"Скорость игрока: {model.SpeedMoving}");
+            }
+            else
+            {
+                Debug.LogError("PlayerModel не найден на объекте игрока.");
+            }
+            
+            //var localPlayer = await _playersService.GetLocalPlayer();
             
             Debug.Log("GetLocalPlayer");
 
             
-            localPlayer.Model
+            model
                 .SpeedMoving
                 .AsObservable()
                 .Subscribe(value => View.UpdateMoveSpeed(value))
                 .AddTo(View);
             
-            localPlayer.Model
+            model
                 .DamagePerSecond
                 .AsObservable()
                 .Subscribe(value => View.UpdateDPS(value))
                 .AddTo(View);
             
-            localPlayer.Model
+            model
                 .AttackRange
                 .AsObservable()
                 .Subscribe(value => View.UpdateRangeAttack(value))

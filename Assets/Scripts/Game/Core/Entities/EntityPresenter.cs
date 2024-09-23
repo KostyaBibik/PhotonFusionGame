@@ -1,6 +1,8 @@
-﻿namespace Game.Core.Entities
+﻿using Fusion;
+
+namespace Game.Core.Entities
 {
-    public abstract class IEntityPresenter<TView, TModel>
+    public abstract class EntityPresenter<TView, TModel> 
         where TView : IEntityView
         where TModel : IEntityModel
     {
@@ -11,7 +13,7 @@
         public TView View => _view;
         public TModel Model => _model;
 
-        public IEntityPresenter(TView view, TModel model)
+        public EntityPresenter(TView view, TModel model)
         {
             _view = view;
             _model = model;

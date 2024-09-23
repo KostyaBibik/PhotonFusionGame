@@ -1,11 +1,11 @@
 ﻿using Game.Core.Entities.PlayerImpl;
 using UnityEngine;
 
-namespace DataBase.Configs
+namespace DataBase.Configs.Player
 {
-    [CreateAssetMenu(menuName = "Config/" + nameof(PlayerPrefabConfig),
-        fileName = nameof(PlayerPrefabConfig))]
-    public class PlayerPrefabConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "Config/" + nameof(PlayerDataConfig),
+        fileName = nameof(PlayerDataConfig))]
+    public class PlayerDataConfig : ScriptableObject
     {
         [SerializeField] private PlayerView _view;
         [SerializeField] private float _moveSpeed;

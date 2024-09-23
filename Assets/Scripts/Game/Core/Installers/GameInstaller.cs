@@ -1,12 +1,15 @@
 ﻿using Game.Core.Factories.Impl;
 using Game.Core.Services;
 using Game.Core.Systems;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Core.Installers
 {
     public class GameInstaller : MonoInstaller
     {
+        [SerializeField] private SceneHandler _sceneHandler;
+        
         public override void InstallBindings()
         {
             BindServices();
@@ -21,6 +24,10 @@ namespace Game.Core.Installers
             Container.BindInterfacesAndSelfTo<PlayersService>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.Bind<SceneHandler>()
+                .FromInstance(_sceneHandler)
+                .AsTransient();
         }
 
         private void BindFactories()
@@ -28,11 +35,18 @@ namespace Game.Core.Installers
             Container.Bind<PlayerFactory>()
                 .AsTransient()
                 .NonLazy();
+            
+            Container.Bind<EnemyFactory>()
+                .AsTransient()
+                .NonLazy();
         }
 
         private void BindTrackSystems()
         {
             Container.BindInterfacesAndSelfTo<PlayerTrackerSystem>()
+                .AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<EnemySpawnSystem>()
                 .AsSingle();
         }
     }

@@ -25,8 +25,6 @@ namespace Game.Core.Components
                 ? data.movementInput 
                 : Vector3.zero;
             
-            Debug.Log("MovementComponent " + _directionInput);
-
             _rigidbody.velocity = _directionInput * _speedMoving;
 
             /*if (!Object.HasInputAuthority || _movementContext == null)
@@ -42,6 +40,4 @@ namespace Game.Core.Components
         public void UpdateSpeedMoving(float value)
             => _speedMoving = value;
     }
-    
-    
 }

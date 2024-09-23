@@ -3,17 +3,17 @@ using UniRx;
 
 namespace Game.Core.Entities.PlayerImpl
 {
-    public class PlayerModel : IEntityModel
+    public class PlayerModel : NetworkBehaviour, IEntityModel
     {
         public readonly ReactiveProperty<float> SpeedMoving = new();
         public readonly ReactiveProperty<float> AttackRange = new();
         public readonly ReactiveProperty<float> DamagePerSecond = new();
         
-        private readonly PlayerRef _player;
+        private PlayerRef _player;
         
         public PlayerRef Player => _player;
         
-        public PlayerModel(
+        public void Init(
             float speedMoving,
             float attackRange,
             float damagePerSecond,

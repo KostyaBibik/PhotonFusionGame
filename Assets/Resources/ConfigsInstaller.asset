@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95bf8b650ee46e9960362d0ce06978e, type: 3}
   m_Name: ConfigsInstaller
   m_EditorClassIdentifier: 
-  _playerPrefabConfig: {fileID: 11400000, guid: 6a4412d416d7fb241a6b6d91062ae132, type: 2}
+  _playerDataConfig: {fileID: 11400000, guid: 6a4412d416d7fb241a6b6d91062ae132, type: 2}
+  _enemyDataConfig: {fileID: 11400000, guid: 5d7f31dce7aeb564bbb107004dccb598, type: 2}

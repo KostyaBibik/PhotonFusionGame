@@ -1,6 +1,6 @@
 ﻿namespace Game.Core.Entities
 {
-    public class IEntityModel
+    public interface IEntityModel
     {
         
     }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shields_FresnelWithHits
+  m_Shader: {fileID: 4800000, guid: 785db2fef48b94e4a8cc7b956b9ef31a, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Bias: 1
+    - _HitDuration: 10
+    - _MaxDistance: 0.5
+    - _Power: 1
+    - _Scale: 1
+    - _ShieldIntensity: 1
+    - _WorldHitTime0: -1000
+    - _WorldHitTime1: -1000
+    - _WorldHitTime2: -1000
+    m_Colors:
+    - _ShieldColor: {r: 1, g: 0, b: 0, a: 1}
+    - _WorldHitPoint0: {r: 0, g: 1, b: 0, a: 0}
+    - _WorldHitPoint1: {r: 0, g: 1, b: 0, a: 0}
+    - _WorldHitPoint2: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
