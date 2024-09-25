@@ -14,18 +14,19 @@ namespace Game.Core.Services
         
         public Vector3 GetFreeSpawnPoint()
         {
-            Vector3 spawnPoint;
-            bool isPointFree;
+            var availableWaypoints = new List<SpawnWaypoint>(_waypoints);
 
-            for (var i = 0; i < CountIterations; i++)
+            for (var i = 0; i < CountIterations && availableWaypoints.Count > 0; i++)
             {
-                spawnPoint = _waypoints[Random.Range(0, _waypoints.Count)].Position;
-                isPointFree = IsPointFree(spawnPoint);
+                var index = Random.Range(0, availableWaypoints.Count);
+                var spawnPoint = availableWaypoints[index].Position;
 
-                if (isPointFree)
+                if (IsPointFree(spawnPoint))
                 {
                     return spawnPoint; 
                 }
+
+                availableWaypoints.RemoveAt(index);
             }
 
             return _waypoints[Random.Range(0, _waypoints.Count)].Position;
@@ -37,7 +38,7 @@ namespace Game.Core.Services
 
             foreach (var collider in colliders)
             {
-                if (collider.TryGetComponent<IEntityView>(out var view))
+                if (collider.GetComponentInParent<IEntityView>() != null)
                 {
                     return false; 
                 }

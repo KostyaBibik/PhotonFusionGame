@@ -9,7 +9,7 @@ namespace Infrastructure.Installers
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private NetworkRunner _networkRunnerPrefab;
-        [SerializeField] private NetworkSceneManagerDefault _networkSceneManager;
+        [SerializeField] private ProgressTrackingNetworkSceneManager _progressTrackingNetworkSceneManager;
         
         public override void InstallBindings()
         {
@@ -23,9 +23,10 @@ namespace Infrastructure.Installers
             var networkRunner = Container.InstantiatePrefabForComponent<NetworkRunner>(_networkRunnerPrefab);
             Container.Bind<NetworkRunner>().FromInstance(networkRunner).AsSingle();
 
-            var networkSceneManager = Container.InstantiatePrefabForComponent<NetworkSceneManagerDefault>(_networkSceneManager);
+            var networkSceneManager = Container.InstantiatePrefabForComponent<ProgressTrackingNetworkSceneManager>(_progressTrackingNetworkSceneManager);
             Container.Bind<NetworkSceneManagerDefault>().FromInstance(networkSceneManager).AsSingle();
-
+            Container.Bind<ProgressTrackingNetworkSceneManager>().FromInstance(networkSceneManager).AsSingle();
+            
             Container.Bind<NetworkInitializer>().AsSingle().NonLazy();
         }
     }

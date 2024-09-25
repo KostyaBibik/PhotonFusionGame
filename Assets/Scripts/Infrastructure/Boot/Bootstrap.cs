@@ -22,7 +22,7 @@ namespace Infrastructure.Boot
             
             ApplyProgress(0);
 
-            await _networkInitializer.ConnectOrCreateRoom();
+            await _networkInitializer.ConnectOrCreateRoom(ApplyProgress);
             
            // await _loader.LoadGame(ApplyProgress);
 

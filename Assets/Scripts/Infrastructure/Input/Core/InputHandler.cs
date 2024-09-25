@@ -103,6 +103,6 @@ public class InputHandler : MonoBehaviour, IDisposable
     public void Dispose()
     {
         _actions.Clear();
-        Object.Destroy(gameObject);
+        //Object.Destroy(gameObject);
     }
 }

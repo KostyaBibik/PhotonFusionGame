@@ -21,8 +21,6 @@ namespace Game.Core.Components
             {
                 if (!_enemiesOnRange.Contains(damageable))
                 {
-                    Debug.Log("damageable.OnDeath += TryRemoveEnemy;");
-                    
                     damageable.OnDeath += TryRemoveEnemy;
                     _enemiesOnRange.Add(damageable);
                 }
@@ -31,21 +29,17 @@ namespace Game.Core.Components
         
         private void OnTriggerExit(Collider other)
         {
-            if (other.GetComponentInParent<IDamageable>() is IDamageable damageable)
+            if (other.GetComponentInParent<IDamageable>() is IDamageable<EnemyPresenter> damageable)
             {
-                Debug.Log("OnTriggerExit other");
-
-                
                 TryRemoveEnemy(damageable);
             }
         }
 
-        private void TryRemoveEnemy(IDamageable enemy)
+        private void TryRemoveEnemy(IDamageable<EnemyPresenter> enemy)
         {
             if (_enemiesOnRange.Contains(enemy))
             {
-                Debug.Log("TryRemoveEnemy");
-                
+                enemy.OnDeath -= TryRemoveEnemy;
                 _enemiesOnRange.Remove(enemy);
             }
         }

@@ -12,7 +12,6 @@ namespace Game.Core.Entities.EnemyImpl
 
         public new EnemyView View => _view;
         public new EnemyModel Model => _model;
-
         public Action<EnemyPresenter> OnDeath { get; set; }
         
         private void Start()
@@ -27,6 +26,7 @@ namespace Game.Core.Entities.EnemyImpl
             _model
                 .Health
                 .AsObservable()
+                .DistinctUntilChanged()
                 .Subscribe(value =>
                 {
                     _view.InvokeUpdateSliderValueRPC(_model.Health.Value / _model.StartHealth);
@@ -48,8 +48,6 @@ namespace Game.Core.Entities.EnemyImpl
             
             if (Object.HasStateAuthority) 
             {
-                
-                
                 Model.NetworkedHealth -= damage;
                 _model.LastDamageInvoker = damageInvoker;
             }
@@ -75,8 +73,6 @@ namespace Game.Core.Entities.EnemyImpl
         private void Death()
         {
             OnDeath?.Invoke(this);
-            
-            Debug.Log($"DEATH: {_model.Grade}");
         }
     }
 }

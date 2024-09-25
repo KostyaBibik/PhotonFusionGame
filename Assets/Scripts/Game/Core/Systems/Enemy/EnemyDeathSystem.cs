@@ -3,7 +3,6 @@ using Fusion;
 using Game.Core.Entities.EnemyImpl;
 using Game.Core.Services;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Core.Systems.Enemy
@@ -45,7 +44,6 @@ namespace Game.Core.Systems.Enemy
             var playerKiller = _playersService.GetPlayer(enemy.Model.LastDamageInvoker);
             if(playerKiller != null)
             {
-                Debug.Log("AddCountKills");
                 playerKiller.AddCountKills();
             }
             

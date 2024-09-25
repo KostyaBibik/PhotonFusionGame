@@ -1,5 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Fusion;
+using Infrastructure.Scenes;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -8,14 +10,18 @@ namespace Game.Core.Initialization
     public class NetworkInitializer
     {
         [Inject] private readonly NetworkRunner _networkRunner;
-        [Inject] private readonly NetworkSceneManagerDefault _networkSceneManager;
+        [Inject] private readonly ProgressTrackingNetworkSceneManager _progressTrackingNetwork;
         
         private int _sceneIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Game.unity");
         private const string _sessionName = "MyRoomName";
 
-        public async UniTask ConnectOrCreateRoom()
+        public async UniTask ConnectOrCreateRoom(Action<float> onProgress)
         {
-            await StartGame();
+            _progressTrackingNetwork.OnSceneLoadProgress += onProgress;
+            
+            await StartGame();  
+            
+            _progressTrackingNetwork.OnSceneLoadProgress -= onProgress;
         }
         
         private async UniTask StartGame()
@@ -27,7 +33,7 @@ namespace Game.Core.Initialization
                 GameMode = GameMode.AutoHostOrClient,
                 SessionName = _sessionName,
                 Scene = _sceneIndex,
-                SceneManager = _networkSceneManager
+                SceneManager = _progressTrackingNetwork
             });
         }
     }

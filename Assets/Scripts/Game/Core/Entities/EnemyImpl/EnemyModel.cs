@@ -5,7 +5,7 @@ namespace Game.Core.Entities.EnemyImpl
 {
     public class EnemyModel : NetworkBehaviour, IEntityModel
     {
-        public readonly ReactiveProperty<float> Health = new();
+        public readonly ReactiveProperty<float> Health = new(1);
         
         [Networked(OnChanged = nameof(OnHealthChanged))]
         public float NetworkedHealth { get; set; }
