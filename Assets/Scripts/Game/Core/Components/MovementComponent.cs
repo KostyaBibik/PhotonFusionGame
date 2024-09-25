@@ -22,7 +22,7 @@ namespace Game.Core.Components
                 return;
             
             _directionInput = GetInput(out NetworkInputData data)
-                ? data.movementInput 
+                ? data.MovementInput 
                 : Vector3.zero;
             
             _rigidbody.velocity = _directionInput * _speedMoving;

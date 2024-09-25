@@ -35,22 +35,22 @@ namespace Game.Core.Factories.Impl
             
             var pos = _sceneHandler.GetFreeSpawnPoint(); 
            
-            var view = _networkRunner.Spawn<PlayerView>(_playerDataConfig.View, inputAuthority:player, position:pos);
-
+            var presenter = _networkRunner.Spawn<PlayerPresenter>(_playerDataConfig.Presenter, inputAuthority:player, position:pos);
+           
+            var view = presenter.View;
             var movementComponent = view.MovementComponent;
 
-            var model = view.PlayerModel;
+            var model = presenter.Model;
             model.Init(speed, attackRange, damagePerSecond, player);
             
             model.SpeedMoving
                 .AsObservable()
                 .Subscribe(movementComponent.UpdateSpeedMoving)
                 .AddTo(view);
-            
-            var presenter = new PlayerPresenter(view, model);
-            _playersService.AddPlayer(presenter);
-            
+
             _networkRunner.SetPlayerObject(player, view.Object);
+            
+            _playersService.AddPlayer(presenter);
             
             return presenter;
         }

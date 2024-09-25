@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Fusion;
-using Game.Core.Entities.PlayerImpl;
+﻿using Fusion;
 using Game.Core.Services;
 using Infrastructure.UI;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace Game.UI.PlayerStats
@@ -15,59 +11,45 @@ namespace Game.UI.PlayerStats
         [Inject] private NetworkRunner _networkRunner;
         [Inject] private PlayersService _playersService;
 
+        private CompositeDisposable _compositeDisposable = new();
+        
         public UIPlayerStatsPresenter(PlayerStatsView view) : base(view)
         {
         }
 
         public override async void Initialize()
         {
-            Debug.Log("Initialize");
-
-            await Task.Delay(2000);
-            
-            var playerObject = _networkRunner.GetPlayerObject(_networkRunner.LocalPlayer);
-
-// Получаем компонент PlayerModel из объекта игрока
-            var model = playerObject.GetComponent<PlayerView>().PlayerModel;
-
-// Теперь вы можете использовать model для доступа к данным игрока
-            if (model != null)
-            {
-                // Пример использования
-                Debug.Log($"Скорость игрока: {model.SpeedMoving}");
-            }
-            else
-            {
-                Debug.LogError("PlayerModel не найден на объекте игрока.");
-            }
-            
-            //var localPlayer = await _playersService.GetLocalPlayer();
-            
-            Debug.Log("GetLocalPlayer");
-
+            var playerObject = await _playersService.GetLocalPlayer();
+            var model = playerObject.Model;
             
             model
                 .SpeedMoving
                 .AsObservable()
                 .Subscribe(value => View.UpdateMoveSpeed(value))
-                .AddTo(View);
+                .AddTo(_compositeDisposable);
             
             model
                 .DamagePerSecond
                 .AsObservable()
                 .Subscribe(value => View.UpdateDPS(value))
-                .AddTo(View);
+                .AddTo(_compositeDisposable);
             
             model
                 .AttackRange
                 .AsObservable()
                 .Subscribe(value => View.UpdateRangeAttack(value))
-                .AddTo(View);
+                .AddTo(_compositeDisposable);
+            
+            model
+                .CountKills
+                .AsObservable()
+                .Subscribe(value => View.UpdateCountKills(value))
+                .AddTo(_compositeDisposable);
         }
 
         public override void Dispose()
         {
-            
+            _compositeDisposable.Dispose();
         }
     }
 }

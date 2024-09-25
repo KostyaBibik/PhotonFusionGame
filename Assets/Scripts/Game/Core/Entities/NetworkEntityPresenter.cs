@@ -2,12 +2,11 @@
 
 namespace Game.Core.Entities
 {
-    public abstract class NetworkEntityPresenter<TView, TModel> : EntityPresenter<TView, TModel>
+    public abstract class NetworkEntityPresenter<TView, TModel> : NetworkBehaviour, IEntityPresenter<TView, TModel>
     where TView : IEntityView
     where TModel : IEntityModel
     {
-        public NetworkEntityPresenter(TView view, TModel model) : base(view, model)
-        {
-        }
+        public TView View { get; }
+        public TModel Model { get; }
     }
 }

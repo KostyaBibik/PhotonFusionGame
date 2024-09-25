@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fusion;
 using Game.Core.Entities.PlayerImpl;
+using Zenject;
 
 namespace Game.Core.Services
 {
     public class PlayersService : IDisposable
     {
+        [Inject] private NetworkRunner _networkRunner;
+        
         private List<PlayerPresenter> _players = new List<PlayerPresenter>();
         private PlayerPresenter _localPlayer;
         
@@ -24,8 +27,14 @@ namespace Game.Core.Services
                 }
             }
         }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        public void SetLocalPlayer()
+        {
+            _localPlayer = _networkRunner.GetPlayerObject(_networkRunner.LocalPlayer).GetComponent<PlayerPresenter>();
+        }
         
-        public PlayerPresenter GetPlayerPresenter(PlayerRef player)
+        public PlayerPresenter GetPlayer(PlayerRef player)
         {
             return _players.FirstOrDefault(p => p.Model.Player == player);
         }

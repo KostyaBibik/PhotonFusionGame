@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemiesVos:
   - Grade: 1
-    Prefab: {fileID: 4244616597531359519, guid: fec3b0d11fa93704f8b3cbe850a2e151, type: 3}
+    Prefab: {fileID: 3817841778293344997, guid: fec3b0d11fa93704f8b3cbe850a2e151, type: 3}
+    Health: 50
   - Grade: 2
-    Prefab: {fileID: 6844262609411854364, guid: 5813e5417a9b39d4fbe0cd31f19b7dcf, type: 3}
+    Prefab: {fileID: 5829889944729691110, guid: 5813e5417a9b39d4fbe0cd31f19b7dcf, type: 3}
+    Health: 100
   - Grade: 3
-    Prefab: {fileID: 5628568618171163962, guid: 6da449e7590302041983cd9299470281, type: 3}
+    Prefab: {fileID: 4611945257624901312, guid: 6da449e7590302041983cd9299470281, type: 3}
+    Health: 200
+  _initialEnemies: 0100000001000000020000000300000003000000

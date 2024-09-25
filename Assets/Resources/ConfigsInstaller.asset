@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ConfigsInstaller
   m_EditorClassIdentifier: 
   _playerDataConfig: {fileID: 11400000, guid: 6a4412d416d7fb241a6b6d91062ae132, type: 2}
+  _playerUpgradeConfig: {fileID: 11400000, guid: 5d7f2c8f02218854aa563a99cd4d78e3, type: 2}
   _enemyDataConfig: {fileID: 11400000, guid: 5d7f31dce7aeb564bbb107004dccb598, type: 2}

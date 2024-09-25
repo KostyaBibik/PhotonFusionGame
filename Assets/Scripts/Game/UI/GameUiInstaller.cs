@@ -19,7 +19,7 @@ namespace Game.UI
 
         private void BindUpgradeButton()
         {
-            Container.BindPresenterWithView<UpgradeButtonPresenter, UpgradeButtonView>();
+            Container.BindPresenterWithView<UIUpgradeButtonPresenter, UpgradeButtonView>();
         }
     }
 }

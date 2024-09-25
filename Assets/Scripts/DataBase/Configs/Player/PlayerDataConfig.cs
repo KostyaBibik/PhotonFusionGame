@@ -7,12 +7,12 @@ namespace DataBase.Configs.Player
         fileName = nameof(PlayerDataConfig))]
     public class PlayerDataConfig : ScriptableObject
     {
-        [SerializeField] private PlayerView _view;
+        [SerializeField] private PlayerPresenter _presenter;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _attackRange;
         [SerializeField] private float _damagePerSecond;
 
-        public PlayerView View => _view;
+        public PlayerPresenter Presenter => _presenter;
         public float MoveSpeed => _moveSpeed;
         public float AttackRange => _attackRange;
         public float DamagePerSecond => _damagePerSecond;

@@ -11,6 +11,7 @@ namespace Game.Core.Factories.Impl
         [Inject] private readonly NetworkRunner _networkRunner;
         [Inject] private readonly EnemyDataConfig _enemyDataConfig;
         [Inject] private readonly SceneHandler _sceneHandler;
+        [Inject] private readonly EnemiesService _enemiesService;
         
         public EnemyFactory(DiContainer container) : base(container)
         {
@@ -24,8 +25,11 @@ namespace Game.Core.Factories.Impl
             var data = _enemyDataConfig.GetEnemyData(grade);
             var pos = _sceneHandler.GetFreeSpawnPoint();
             
-            var view = _networkRunner.Spawn<EnemyView>(data.Prefab, position:pos);
-
+            var presenter = _networkRunner.Spawn(data.Prefab, position:pos);
+         
+            presenter.Model.Init(data.Grade, data.Health);
+            
+            _enemiesService.AddEnemy(presenter);
         }
     }
 }

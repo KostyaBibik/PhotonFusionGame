@@ -9,7 +9,7 @@ namespace Game.Core.Components
 {
     public struct NetworkInputData : INetworkInput
     {
-        public Vector3 movementInput;
+        public Vector3 MovementInput;
     }
     
     public class PlayerInputComponent : NetworkBehaviour, INetworkRunnerCallbacks, IPlayerLeft
@@ -47,8 +47,6 @@ namespace Game.Core.Components
                 return;
             
             _movementInput = new Vector3(_movementContext.Value.x, 0f, _movementContext.Value.y);
-            Debug.Log("FixedUpdateNetwork " + _movementInput);
-
         }
         
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -64,10 +62,8 @@ namespace Game.Core.Components
             
             NetworkInputData inputData = new NetworkInputData
             {
-                movementInput = _movementInput
+                MovementInput = _movementInput
             };
-            
-            Debug.Log("OnInput " + inputData.movementInput);
             
             input.Set(inputData);
         }
@@ -76,20 +72,13 @@ namespace Game.Core.Components
         {
             if(!Object.InputAuthority)
                 return;
-            
-            Debug.Log($"Player {player} left the game.");
 
             var playerObject = _networkRunner.GetPlayerObject(player);
             
             if (playerObject == Object)
             {
-                Debug.Log("This is the current player, disabling input and despawning.");
                 _aliveStatus = true;
                 _networkRunner.Despawn(Object);
-            }
-            else
-            {
-                Debug.Log("This is not the current player, no action needed.");
             }
         }
 

@@ -4,7 +4,7 @@ using Zenject;
 namespace Game.Core.Factories
 {
     public abstract class EntityFactory<TPresenter, TView, TModel> 
-        where TPresenter : EntityPresenter<TView, TModel>
+        where TPresenter : IEntityPresenter<TView, TModel>
         where TView : IEntityView
         where TModel : IEntityModel
     {

@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb056165e6004b059c93eac9e5ca421f, type: 3}
-  m_Name: PlayerDataConfig
+  m_Script: {fileID: 11500000, guid: 2fa5c3fe078f4a4b872c7d8a69c802be, type: 3}
+  m_Name: PlayerUpgradeConfig
   m_EditorClassIdentifier: 
-  _presenter: {fileID: 6352923133922553881, guid: 24465c02057414247954dbbb91b852b2, type: 3}
-  _moveSpeed: 5
-  _attackRange: 5
-  _damagePerSecond: 2
+  _speedUpgradeChance: 60
+  _speedUpgradeValue: 0.5
+  _rangeUpgradeChance: 30
+  _rangeUpgradeValue: 1
+  _damageUpgradeChance: 10
+  _damageUpgradeValue: 10

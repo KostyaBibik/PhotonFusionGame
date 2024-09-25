@@ -7,6 +7,7 @@ namespace DataBase.Configs.Enemy
     public struct EnemyVO
     {
         public EEnemyGrade Grade;
-        public EnemyView Prefab;
+        public EnemyPresenter Prefab;
+        public float Health;
     }
 }

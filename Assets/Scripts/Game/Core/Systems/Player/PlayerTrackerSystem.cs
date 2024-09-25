@@ -4,7 +4,6 @@ using Fusion;
 using Fusion.Sockets;
 using Game.Core.Factories.Impl;
 using Game.Core.Services;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Core.Systems
@@ -31,21 +30,6 @@ namespace Game.Core.Systems
             }
         }
 
-        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-        {
-            /*if (_networkRunner.IsServer)
-            {
-                var leftPlayer = _playersService.GetPlayerPresenter(player);
-                var playerObject = runner.GetPlayerObject(player);
-                
-                if (leftPlayer != null)
-                {
-                    _networkRunner.Despawn(leftPlayer.View.Object);
-                }
-            }*/
-        }
-        
-
 #region Unused Callbacks from Network
 
         public void OnConnectedToServer(NetworkRunner runner) {}
@@ -58,6 +42,7 @@ namespace Game.Core.Systems
         public void OnPlayerActivation(NetworkRunner runner, PlayerRef player) {}
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) {}
         public void OnSceneLoadDone(NetworkRunner runner) {}
+        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
         public void OnSceneLoadStart(NetworkRunner runner) {}
         public void OnInput(NetworkRunner runner, NetworkInput input) { }
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) {}

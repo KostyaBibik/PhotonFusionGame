@@ -1,6 +1,8 @@
 ﻿using Game.Core.Factories.Impl;
 using Game.Core.Services;
 using Game.Core.Systems;
+using Game.Core.Systems.Enemy;
+using Game.Core.Systems.Player;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +14,8 @@ namespace Game.Core.Installers
         
         public override void InstallBindings()
         {
+            BindSceneComponents();
+            
             BindServices();
             
             BindFactories();
@@ -19,35 +23,69 @@ namespace Game.Core.Installers
             BindTrackSystems();
         }
 
-        private void BindServices()
+        private void BindSceneComponents()
         {
-            Container.BindInterfacesAndSelfTo<PlayersService>()
-                .AsSingle()
-                .NonLazy();
-            
-            Container.Bind<SceneHandler>()
+            Container
+                .Bind<SceneHandler>()
                 .FromInstance(_sceneHandler)
                 .AsTransient();
+            
+            Container
+                .Bind<Camera>()
+                .FromInstance(Camera.main)
+                .AsTransient();
+        }
+
+        private void BindServices()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayersService>()
+                .AsSingle()
+                .NonLazy(); 
+            
+            Container
+                .BindInterfacesAndSelfTo<EnemiesService>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindFactories()
         {
-            Container.Bind<PlayerFactory>()
+            Container
+                .Bind<PlayerFactory>()
                 .AsTransient()
                 .NonLazy();
             
-            Container.Bind<EnemyFactory>()
+            Container
+                .Bind<EnemyFactory>()
                 .AsTransient()
                 .NonLazy();
         }
 
         private void BindTrackSystems()
         {
-            Container.BindInterfacesAndSelfTo<PlayerTrackerSystem>()
+            Container
+                .BindInterfacesAndSelfTo<PlayerTrackerSystem>()
                 .AsSingle();
             
-            Container.BindInterfacesAndSelfTo<EnemySpawnSystem>()
+            Container
+                .BindInterfacesAndSelfTo<EnemySpawnSystem>()
                 .AsSingle();
+            
+            Container
+                .BindInterfacesAndSelfTo<AttackSystem>()
+                .AsSingle()
+                .NonLazy();
+            
+            Container
+                .BindInterfacesAndSelfTo<UpgradeHandler>()
+                .AsSingle()
+                .NonLazy(); 
+            
+            Container
+                .BindInterfacesAndSelfTo<EnemyDeathSystem>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

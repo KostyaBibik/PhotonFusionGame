@@ -8,9 +8,9 @@ namespace Game.Core.Services
     public class SceneHandler : MonoBehaviour
     {
         [SerializeField] private List<SpawnWaypoint> _waypoints;
-        [SerializeField] private float _spawnRadius = 2f;
+        [SerializeField] private float _spawnRadius = 1f;
 
-        private const int CountIterations = 10;
+        private const int CountIterations = 20;
         
         public Vector3 GetFreeSpawnPoint()
         {
@@ -37,7 +37,7 @@ namespace Game.Core.Services
 
             foreach (var collider in colliders)
             {
-                if (collider.GetComponent<IEntityView>() != null)
+                if (collider.TryGetComponent<IEntityView>(out var view))
                 {
                     return false; 
                 }

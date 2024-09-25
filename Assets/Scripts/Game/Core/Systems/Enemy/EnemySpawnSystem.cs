@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataBase.Configs.Enemy;
 using Fusion;
 using Fusion.Sockets;
 using Game.Core.Entities.EnemyImpl;
 using Game.Core.Factories.Impl;
 using Zenject;
 
-namespace Game.Core.Systems
+namespace Game.Core.Systems.Enemy
 {
     public class EnemySpawnSystem : IInitializable, INetworkRunnerCallbacks
     {
-        [Inject] private EnemyFactory _enemyFactory;
+        [Inject] private readonly EnemyFactory _enemyFactory;
         [Inject] private readonly NetworkRunner _networkRunner;
+        [Inject] private readonly EnemyDataConfig _enemyDataConfig;
 
         public void Initialize()
         {
@@ -19,11 +21,6 @@ namespace Game.Core.Systems
             {
                 _networkRunner.AddCallbacks(this);
             }
-        }
-
-        public void SceneLoadDone()
-        {
-            CreateInitialEnemies();
         }
 
         public void OnSceneLoadDone(NetworkRunner runner)
@@ -36,9 +33,16 @@ namespace Game.Core.Systems
         
         private void CreateInitialEnemies()
         {
-            _enemyFactory.Create(EEnemyGrade.Easy);
-            _enemyFactory.Create(EEnemyGrade.Normal);
-            _enemyFactory.Create(EEnemyGrade.Hard);
+            var initialEnemies = _enemyDataConfig.InitialEnemies;
+            foreach (var enemyGrade in initialEnemies)
+            {
+                SpawnEnemy(enemyGrade);
+            }
+        }
+
+        public void SpawnEnemy(EEnemyGrade grade)
+        {
+            _enemyFactory.Create(grade);
         }
         
         #region Unused Callbacks from Network
